@@ -1,8 +1,10 @@
 package com.agdb.demoDBapi.service.impl;
 
+import com.agdb.demoDBapi.excepton.CloudVendorNotFoundException;
 import com.agdb.demoDBapi.model.CloudVendor;
 import com.agdb.demoDBapi.repository.CloudVendorRepository;
 import com.agdb.demoDBapi.service.CloudVendorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +38,8 @@ public class CloudVendorServiceImpl implements CloudVendorService {
 
     @Override
     public CloudVendor getCloudVendorById(String cloudVendorId) {
+        if (cloudVendorRepository.findById(cloudVendorId).isEmpty())
+            throw new CloudVendorNotFoundException("Requested Cloud vendor does not exist");
         return cloudVendorRepository.findById(cloudVendorId).get();
     }
 
