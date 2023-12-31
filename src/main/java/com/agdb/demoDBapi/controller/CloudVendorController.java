@@ -1,10 +1,12 @@
 package com.agdb.demoDBapi.controller;
 
 import com.agdb.demoDBapi.model.CloudVendor;
+import com.agdb.demoDBapi.response.ResponseHandler;
 import com.agdb.demoDBapi.service.CloudVendorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/cloudVendor")
@@ -20,14 +22,14 @@ public class CloudVendorController {
 
     // Read specific cloud vendor details from DB
     @GetMapping("{vendorId}")
-    public CloudVendor getCloudVendorDetails(@PathVariable("vendorId") String vendorId) {
-        return cloudVendorService.getCloudVendorById(vendorId);
+    public ResponseEntity<Object> getCloudVendorDetails(@PathVariable("vendorId") String vendorId) {
+        return ResponseHandler.responseBuilder("Success", HttpStatus.OK , cloudVendorService.getCloudVendorById(vendorId)) ;
     }
 
     // Read all cloud vendor details from DB
     @GetMapping
-    public List<CloudVendor> getAllCloudVendorDetails() {
-        return cloudVendorService.getAllCloudVendors();
+    public ResponseEntity<Object> getAllCloudVendorDetails() {
+        return ResponseHandler.responseBuilder("Success", HttpStatus.OK , cloudVendorService.getAllCloudVendors());
     }
 
     @PostMapping
